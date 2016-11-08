@@ -5,6 +5,7 @@ class EntidadesGenerica:
         self.conexion = sqlite3.connect(nombreBD)
         self.conexion.row_factory = sqlite3.Row
         self.status = 1
+        self.autocomit=True
 
     def __ejecutarSQL__(self, script, parametros):
         c = self.conexion.cursor()
@@ -17,5 +18,6 @@ class EntidadesGenerica:
         except sqlite3.Error as er:
             print(er)
             status = 1
-        self.conexion.commit()
+        if self.autocomit:
+            self.conexion.commit()
         return status
